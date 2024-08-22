@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/authentication/username_screen.dart';
 import 'package:tiktok_clone/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -11,16 +12,22 @@ class LoginScreen extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
+  void _onEmailTap(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const UsernameScreen(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.size40),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.size40),
           child: Column(
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 "Log in to TikTok",
                 style: TextStyle(
                   fontSize: Sizes.size24,
@@ -28,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 "Manage your account, check notifications, comment on videos, and more",
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -38,23 +45,25 @@ class LoginScreen extends StatelessWidget {
               ),
               Gaps.v40,
               AuthButton(
-                icon: FaIcon(
+                text: "Use phone or email",
+                icon: const FaIcon(
                   FontAwesomeIcons.solidUser,
                 ),
-                text: "Use phone or email",
+                screenPage: _onEmailTap,
               ),
               AuthButton(
-                icon: FaIcon(
+                icon: const FaIcon(
                   FontAwesomeIcons.apple,
                 ),
                 text: "Continue with Apple",
+                screenPage: onSignupTap,
               ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.grey[100],
+        color: Colors.grey[50],
         elevation: 1,
         child: Padding(
           padding: const EdgeInsets.symmetric(
