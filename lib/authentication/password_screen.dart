@@ -179,7 +179,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   const Text("Letters, numbers, and special characters")
                 ],
               ),
-              Gaps.v16,
+              Gaps.v36,
               GestureDetector(
                 onTap: _onNextTap,
                 child: FormButton(

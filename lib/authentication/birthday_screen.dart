@@ -83,6 +83,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               ),
               Gaps.v16,
               TextField(
+                autocorrect: false,
                 enabled: false,
                 onEditingComplete: _onNextTap,
                 controller: _birthdayController,
@@ -100,7 +101,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                 ),
                 cursorColor: Theme.of(context).primaryColor,
               ),
-              Gaps.v16,
+              Gaps.v36,
               GestureDetector(
                 onTap: _onNextTap,
                 child: const FormButton(

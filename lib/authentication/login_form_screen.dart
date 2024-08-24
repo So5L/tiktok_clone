@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/authentication/email_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -12,54 +12,150 @@ class LoginFormScreen extends StatefulWidget {
 }
 
 class _LoginFormScreenState extends State<LoginFormScreen> {
-  void _onNextTap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
-      ),
-    );
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _passwordcontroller = TextEditingController();
+  final regExp = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  bool _obscureText = true;
+  Map<String, String> formData = {};
+
+  void _onSubmitTap() {
+    if (_formKey.currentState != null) {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        print(formData);
+      }
+    }
   }
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
+  void _onClearTap() {
+    _passwordcontroller.clear();
+  }
+
+  void _toggleObscureText() {
+    _obscureText = !_obscureText;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          "Log in",
+    return GestureDetector(
+      onTap: _onScaffoldTap,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text(
+            "Log in",
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size36,
-        ),
-        child: Column(
-          children: [
-            Gaps.v28,
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Email',
-              ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size36,
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Gaps.v28,
+                TextFormField(
+                  onEditingComplete: _onSubmitTap,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value!.isNotEmpty) {
+                      if (!regExp.hasMatch(value)) {
+                        return "Email not valid";
+                      }
+                    }
+                    return null;
+                  },
+                  onSaved: (newValue) {
+                    if (newValue != null) {
+                      formData['email'] = newValue;
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Email',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                  ),
+                  cursorColor: Theme.of(context).primaryColor,
+                ),
+                Gaps.v16,
+                TextFormField(
+                  obscureText: _obscureText,
+                  autocorrect: false,
+                  validator: (value) {
+                    return null;
+                  },
+                  onSaved: (newValue) {
+                    if (newValue != null) {
+                      formData['password'] = newValue;
+                    }
+                  },
+                  controller: _passwordcontroller,
+                  onEditingComplete: _onSubmitTap,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    suffix: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: _onClearTap,
+                          child: FaIcon(
+                            FontAwesomeIcons.solidCircleXmark,
+                            color: Colors.grey.shade500,
+                            size: Sizes.size20,
+                          ),
+                        ),
+                        Gaps.h16,
+                        GestureDetector(
+                          onTap: _toggleObscureText,
+                          child: FaIcon(
+                            _obscureText
+                                ? FontAwesomeIcons.eye
+                                : FontAwesomeIcons.eyeSlash,
+                            color: Colors.grey.shade500,
+                            size: Sizes.size20,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  cursorColor: Theme.of(context).primaryColor,
+                ),
+                Gaps.v36,
+                GestureDetector(
+                  onTap: _onSubmitTap,
+                  child: const FormButton(
+                    disabled: false,
+                    buttonName: 'Log in',
+                  ),
+                ),
+              ],
             ),
-            Gaps.v16,
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Password',
-              ),
-            ),
-            Gaps.v28,
-            GestureDetector(
-              onTap: _onNextTap,
-              child: const FormButton(
-                disabled: false,
-                buttonName: 'Log in',
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
