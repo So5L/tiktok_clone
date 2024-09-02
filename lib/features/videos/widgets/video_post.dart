@@ -20,8 +20,7 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost> {
   final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset(
-          "/Users/min/Documents/assets/videos/IMG_4161.MOV");
+      VideoPlayerController.asset("assets/videos/IMG_4161.MOV");
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -33,9 +32,9 @@ class _VideoPostState extends State<VideoPost> {
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController.addListener(_onVideoChange);
     await _videoPlayerController.initialize();
     setState(() {});
-    _videoPlayerController.addListener(_onVideoChange);
   }
 
   @override

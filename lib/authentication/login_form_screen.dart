@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/authentication/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
@@ -23,20 +24,22 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        print(formData);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const InterestsScreen()),
+            (route) => false);
       }
     }
   }
 
-  void _onScaffoldTap() {
+  void onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
-  void _onClearTap() {
+  void onClearTap() {
     _passwordcontroller.clear();
   }
 
-  void _toggleObscureText() {
+  void toggleObscureText() {
     _obscureText = !_obscureText;
     setState(() {});
   }
@@ -44,7 +47,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _onScaffoldTap,
+      onTap: onScaffoldTap,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -122,7 +125,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         GestureDetector(
-                          onTap: _onClearTap,
+                          onTap: onClearTap,
                           child: FaIcon(
                             FontAwesomeIcons.solidCircleXmark,
                             color: Colors.grey.shade500,
@@ -131,7 +134,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                         ),
                         Gaps.h16,
                         GestureDetector(
-                          onTap: _toggleObscureText,
+                          onTap: toggleObscureText,
                           child: FaIcon(
                             _obscureText
                                 ? FontAwesomeIcons.eye

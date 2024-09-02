@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 
 void main() {
   runApp(const TiktokApp());
@@ -15,6 +15,7 @@ class TiktokApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tiktok Clone',
       theme: ThemeData(
+          useMaterial3: false,
           scaffoldBackgroundColor: Colors.white,
           primaryColor: const Color(0xFFE9435A),
           appBarTheme: const AppBarTheme(
@@ -27,7 +28,7 @@ class TiktokApp extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           )),
-      home: const SignUpScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }

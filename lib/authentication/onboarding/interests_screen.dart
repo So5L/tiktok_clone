@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/authentication/onboarding/tutorial_screen.dart';
+import 'package:tiktok_clone/authentication/onboarding/widgets/interest_button.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 
 const interests = [
   "Daily Life",
@@ -88,6 +92,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: AnimatedOpacity(
           opacity: _showTitle ? 1 : 0,
           duration: const Duration(milliseconds: 300),
@@ -107,7 +112,6 @@ class _InterestsScreenState extends State<InterestsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Gaps.v32,
                 const Text(
                   "Choose your interests",
                   style: TextStyle(
