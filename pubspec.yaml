@@ -46,6 +46,8 @@ dependencies:
 
   visibility_detector: 0.3.3
 
+  http: ^1.2.2
+
 
 
 

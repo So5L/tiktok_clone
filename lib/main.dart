@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/challenge/main_screen.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 
 void main() {
   runApp(const TiktokApp());
@@ -28,7 +28,9 @@ class TiktokApp extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           )),
-      home: const MainNavigationScreen(),
+      home: const MainScreen(),
     );
   }
 }
+
+// 미리 모든 앱개발을 위해 Web 부터 공부해보자
