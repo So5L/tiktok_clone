@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
 
 class StfScreen extends StatefulWidget {
   const StfScreen({super.key});
@@ -23,18 +24,39 @@ class _StfScreenState extends State<StfScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('im built!');
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Text(
+            "Update sooooon!",
+            style: TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+            ),
+          ),
+          Gaps.v10,
+          const Text(
+            "Try click '+' button",
+            style: TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+            ),
+          ),
+          Gaps.v20,
           Text(
             "$_clicks",
-            style: const TextStyle(fontSize: 48),
+            style: const TextStyle(
+              fontSize: 48,
+              color: Colors.white,
+            ),
           ),
           TextButton(
             onPressed: _increase,
-            child: const Text('+'),
+            child: const Icon(
+              Icons.add,
+              size: 30,
+            ),
           )
         ],
       ),

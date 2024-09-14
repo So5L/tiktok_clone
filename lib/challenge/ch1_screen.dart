@@ -1,17 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class Ch1Screen extends StatefulWidget {
+  const Ch1Screen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<Ch1Screen> createState() => _Ch1ScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _Ch1ScreenState extends State<Ch1Screen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
