@@ -1,58 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/authentication/password_screen.dart';
+import 'package:tiktok_clone/authentication/screens/email_screen.dart';
 import 'package:tiktok_clone/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
-class EmailScreen extends StatefulWidget {
-  const EmailScreen({super.key});
+class UsernameScreen extends StatefulWidget {
+  const UsernameScreen({super.key});
 
   @override
-  State<EmailScreen> createState() => _EmailScreenState();
+  State<UsernameScreen> createState() => _UsernameScreenState();
 }
 
-class _EmailScreenState extends State<EmailScreen> {
-  final TextEditingController _emailcontroller = TextEditingController();
+class _UsernameScreenState extends State<UsernameScreen> {
+  final TextEditingController _usernamecontroller = TextEditingController();
 
-  String _email = "";
+  String _username = "";
 
   @override
   void initState() {
     super.initState();
-    _emailcontroller.addListener(() {
+    _usernamecontroller.addListener(() {
       setState(() {
-        _email = _emailcontroller.text;
+        _username = _usernamecontroller.text;
       });
     });
   }
 
   @override
   void dispose() {
-    _emailcontroller.dispose();
+    _usernamecontroller.dispose();
     super.dispose();
   }
 
-  String? _isEmailValid() {
-    if (_email.isEmpty) return null;
-    final regExp = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_email)) {
-      return "Email not valid";
-    }
-    return null;
+  void _onNextTap() {
+    if (_username.isEmpty) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const EmailScreen(),
+      ),
+    );
   }
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
-  }
-
-  void _onNextTap() {
-    if (_email.isEmpty || _isEmailValid() != null) return;
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const PasswordScreen(),
-      ),
-    );
   }
 
   @override
@@ -75,20 +65,26 @@ class _EmailScreenState extends State<EmailScreen> {
             children: [
               Gaps.v40,
               const Text(
-                "What is your email?",
+                "Create username",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),
               ),
+              Gaps.v8,
+              const Text(
+                "You can always change this later.",
+                style: TextStyle(
+                  fontSize: Sizes.size16,
+                  color: Colors.black54,
+                ),
+              ),
               Gaps.v16,
               TextField(
-                keyboardType: TextInputType.emailAddress,
-                controller: _emailcontroller,
                 onEditingComplete: _onNextTap,
+                controller: _usernamecontroller,
                 decoration: InputDecoration(
-                  hintText: "Email",
-                  errorText: _isEmailValid(),
+                  hintText: "Username",
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -106,7 +102,7 @@ class _EmailScreenState extends State<EmailScreen> {
               GestureDetector(
                 onTap: _onNextTap,
                 child: FormButton(
-                  disabled: _email.isEmpty || _isEmailValid() != null,
+                  disabled: _username.isEmpty,
                   buttonName: 'Next',
                 ),
               ),

@@ -1,49 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/authentication/onboarding/tutorial_screen.dart';
+import 'package:tiktok_clone/authentication/onboarding/screens/tutorial_screen.dart';
 import 'package:tiktok_clone/authentication/onboarding/widgets/interest_button.dart';
+import 'package:tiktok_clone/authentication/onboarding/widgets/interests.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-
-const interests = [
-  "Daily Life",
-  "Comedy",
-  "Entertainment",
-  "Animals",
-  "Food",
-  "Beauty & Style",
-  "Drama",
-  "Learning",
-  "Talent",
-  "Sports",
-  "Auto",
-  "Family",
-  "Fitness & Health",
-  "DIY & Life Hacks",
-  "Arts & Crafts",
-  "Dance",
-  "Outdoors",
-  "Oddly Satisfying",
-  "Home & Garden",
-  "Daily Life",
-  "Comedy",
-  "Entertainment",
-  "Animals",
-  "Food",
-  "Beauty & Style",
-  "Drama",
-  "Learning",
-  "Talent",
-  "Sports",
-  "Auto",
-  "Family",
-  "Fitness & Health",
-  "DIY & Life Hacks",
-  "Arts & Crafts",
-  "Dance",
-  "Outdoors",
-  "Oddly Satisfying",
-  "Home & Garden",
-];
 
 class InterestsScreen extends StatefulWidget {
   const InterestsScreen({super.key});

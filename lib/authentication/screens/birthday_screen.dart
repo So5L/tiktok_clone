@@ -1,48 +1,51 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/authentication/email_screen.dart';
+import 'package:tiktok_clone/authentication/onboarding/screens/interests_screen.dart';
 import 'package:tiktok_clone/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
-class UsernameScreen extends StatefulWidget {
-  const UsernameScreen({super.key});
+class BirthdayScreen extends StatefulWidget {
+  const BirthdayScreen({super.key});
 
   @override
-  State<UsernameScreen> createState() => _UsernameScreenState();
+  State<BirthdayScreen> createState() => _BirthdayScreenState();
 }
 
-class _UsernameScreenState extends State<UsernameScreen> {
-  final TextEditingController _usernamecontroller = TextEditingController();
+class _BirthdayScreenState extends State<BirthdayScreen> {
+  final TextEditingController _birthdayController = TextEditingController();
 
-  String _username = "";
+  DateTime nowDate = DateTime.now();
+  DateTime initialDate = DateTime.now().add(const Duration(days: -(365 * 18)));
 
   @override
   void initState() {
     super.initState();
-    _usernamecontroller.addListener(() {
-      setState(() {
-        _username = _usernamecontroller.text;
-      });
-    });
+    _setTextFieldDate(initialDate);
   }
 
   @override
   void dispose() {
-    _usernamecontroller.dispose();
+    _birthdayController.dispose();
     super.dispose();
   }
 
   void _onNextTap() {
-    if (_username.isEmpty) return;
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
+        builder: (context) => const InterestsScreen(),
       ),
+      (route) => false,
     );
   }
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _setTextFieldDate(DateTime date) {
+    final textDate = date.toString().split(" ").first;
+    _birthdayController.value = TextEditingValue(text: textDate);
   }
 
   @override
@@ -65,7 +68,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
             children: [
               Gaps.v40,
               const Text(
-                "Create username",
+                "When's your birthday?",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
@@ -73,7 +76,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
               ),
               Gaps.v8,
               const Text(
-                "You can always change this later.",
+                "Your birthday won't be shown publicly",
                 style: TextStyle(
                   fontSize: Sizes.size16,
                   color: Colors.black54,
@@ -81,10 +84,11 @@ class _UsernameScreenState extends State<UsernameScreen> {
               ),
               Gaps.v16,
               TextField(
+                autocorrect: false,
+                enabled: false,
                 onEditingComplete: _onNextTap,
-                controller: _usernamecontroller,
+                controller: _birthdayController,
                 decoration: InputDecoration(
-                  hintText: "Username",
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -101,12 +105,21 @@ class _UsernameScreenState extends State<UsernameScreen> {
               Gaps.v36,
               GestureDetector(
                 onTap: _onNextTap,
-                child: FormButton(
-                  disabled: _username.isEmpty,
+                child: const FormButton(
+                  disabled: false,
                   buttonName: 'Next',
                 ),
               ),
             ],
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          height: 300,
+          child: CupertinoDatePicker(
+            maximumDate: nowDate,
+            initialDateTime: initialDate,
+            mode: CupertinoDatePickerMode.date,
+            onDateTimeChanged: _setTextFieldDate,
           ),
         ),
       ),

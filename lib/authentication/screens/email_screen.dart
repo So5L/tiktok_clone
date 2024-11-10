@@ -1,51 +1,58 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/authentication/onboarding/interests_screen.dart';
+import 'package:tiktok_clone/authentication/screens/password_screen.dart';
 import 'package:tiktok_clone/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
-class BirthdayScreen extends StatefulWidget {
-  const BirthdayScreen({super.key});
+class EmailScreen extends StatefulWidget {
+  const EmailScreen({super.key});
 
   @override
-  State<BirthdayScreen> createState() => _BirthdayScreenState();
+  State<EmailScreen> createState() => _EmailScreenState();
 }
 
-class _BirthdayScreenState extends State<BirthdayScreen> {
-  final TextEditingController _birthdayController = TextEditingController();
+class _EmailScreenState extends State<EmailScreen> {
+  final TextEditingController _emailcontroller = TextEditingController();
 
-  DateTime nowDate = DateTime.now();
-  DateTime initialDate = DateTime.now().add(const Duration(days: -(365 * 18)));
+  String _email = "";
 
   @override
   void initState() {
     super.initState();
-    _setTextFieldDate(initialDate);
+    _emailcontroller.addListener(() {
+      setState(() {
+        _email = _emailcontroller.text;
+      });
+    });
   }
 
   @override
   void dispose() {
-    _birthdayController.dispose();
+    _emailcontroller.dispose();
     super.dispose();
   }
 
-  void _onNextTap() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
-      (route) => false,
-    );
+  String? _isEmailValid() {
+    if (_email.isEmpty) return null;
+    final regExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!regExp.hasMatch(_email)) {
+      return "Email not valid";
+    }
+    return null;
   }
 
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
-  void _setTextFieldDate(DateTime date) {
-    final textDate = date.toString().split(" ").first;
-    _birthdayController.value = TextEditingValue(text: textDate);
+  void _onNextTap() {
+    if (_email.isEmpty || _isEmailValid() != null) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const PasswordScreen(),
+      ),
+    );
   }
 
   @override
@@ -68,27 +75,20 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             children: [
               Gaps.v40,
               const Text(
-                "When's your birthday?",
+                "What is your email?",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Gaps.v8,
-              const Text(
-                "Your birthday won't be shown publicly",
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black54,
-                ),
-              ),
               Gaps.v16,
               TextField(
-                autocorrect: false,
-                enabled: false,
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailcontroller,
                 onEditingComplete: _onNextTap,
-                controller: _birthdayController,
                 decoration: InputDecoration(
+                  hintText: "Email",
+                  errorText: _isEmailValid(),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -105,21 +105,12 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               Gaps.v36,
               GestureDetector(
                 onTap: _onNextTap,
-                child: const FormButton(
-                  disabled: false,
+                child: FormButton(
+                  disabled: _email.isEmpty || _isEmailValid() != null,
                   buttonName: 'Next',
                 ),
               ),
             ],
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          height: 300,
-          child: CupertinoDatePicker(
-            maximumDate: nowDate,
-            initialDateTime: initialDate,
-            mode: CupertinoDatePickerMode.date,
-            onDateTimeChanged: _setTextFieldDate,
           ),
         ),
       ),

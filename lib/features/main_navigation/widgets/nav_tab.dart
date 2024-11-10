@@ -20,7 +20,7 @@ class NavTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => onTap(),
+        onTap: () => onTap,
         child: Container(
           color: Colors.black,
           child: AnimatedOpacity(
