@@ -37,7 +37,7 @@ class _VideoPostState extends State<VideoPost>
     }
   }
 
-  void _initVideoPlayer() async {
+  Future<void> _initVideoPlayer() async {
     _videoPlayerController =
         VideoPlayerController.asset("assets/videos/IMG_4162.MOV");
     await _videoPlayerController.initialize();
